@@ -22,7 +22,6 @@ import CustomLink from '@/components/links/CustomLink';
 import PrimaryLink from '@/components/links/PrimaryLink';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Logo from '@/components/Logo';
-import NextImage from '@/components/NextImage';
 import Seo from '@/components/Seo';
 
 import { ROLES } from '@/constant/roles';
@@ -112,14 +111,20 @@ function RegisterPage({ role }: RegisterPageProps) {
 
       <main>
         <div className='flex flex-col min-h-screen bg-white sm:flex-row'>
-          <div className='min-h-[60vh] block sticky top-0 w-full bg-gradient-to-b from-primary-50 to-primary-100 lg:min-h-screen'>
-            <NextImage
-              className='object-cover absolute inset-0 w-full h-full'
-              src={`/images/illustration/${role}.svg`}
-              layout='fill'
-              objectFit='cover'
-              alt='login background image'
-            />
+          <div
+            className='min-h-[60vh] flex sticky top-0 w-full bg-bottom bg-no-repeat bg-cover bg-gradient-to-b from-primary-50 to-primary-100 lg:min-h-screen'
+            style={{
+              backgroundImage: `url(/images/illustration/${role}.svg)`,
+            }}
+          >
+            <div className='pt-[max(calc(100vw/12),6rem)] flex absolute inset-0 z-10 w-full h-full'>
+              <div className='flex z-10 flex-col gap-4 mx-4 max-w-lg leading-tight sm:mx-6 lg:mx-20 xl:mx-24'>
+                <h1 className='text-[min(10vw,4rem)]'>SBMKKP</h1>
+                <h2 className='text-[min(5vw,2rem)] font-normal leading-tight text-primary-900'>
+                  Seleksi Bersama masuk Kementerian Kelautan dan Perikanan
+                </h2>
+              </div>
+            </div>
           </div>
           <div className='flex z-10 flex-col justify-center px-4 pt-0 pb-12 bg-white sm:px-6 lg:flex-none lg:px-20 xl:px-24'>
             <UnstyledLink
@@ -131,7 +136,7 @@ function RegisterPage({ role }: RegisterPageProps) {
               </div>
             </UnstyledLink>
             <div className='mx-auto w-full max-w-sm sm:min-w-[24rem]'>
-              <div className='w-full'>
+              <div className='w-full' id='register'>
                 <Logo />
                 <h2 className='mt-6 text-3xl font-extrabold text-gray-900'>
                   Daftar akun sebagai {role}
@@ -145,7 +150,6 @@ function RegisterPage({ role }: RegisterPageProps) {
                         <CustomLink href={`/register/${role}`}>
                           {role}
                         </CustomLink>
-                        {i === 0 && <span> atau </span>}
                       </React.Fragment>
                     ))}
                 </p>
@@ -157,7 +161,6 @@ function RegisterPage({ role }: RegisterPageProps) {
                     <form
                       onSubmit={handleSubmit(onSubmit)}
                       className='space-y-6'
-                      id='register'
                     >
                       <RegisterFactory role={role} />
                       <div>
