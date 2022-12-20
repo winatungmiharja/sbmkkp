@@ -1,0 +1,21 @@
+version: '3'
+
+networks: 
+    centrifugo_network:
+        driver: bridge
+        
+services:
+    next-atlet:
+        image: next-atlet
+        build: ./
+        restart: unless-stopped
+        environment:
+            TZ: Asia/Jakarta
+        container_name: next-atlet
+        ports:
+            - "3000:3000"
+        tty: true
+        volumes:
+            - ./:/var/www/html
+            - ./yarn-cache:/data/yarn/cache
+        # download dependencies using `yarn install --cache-folder=/data/yarn/cache`
