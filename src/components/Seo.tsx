@@ -1,14 +1,12 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { openGraph } from '@/lib/helper';
-
 const defaultMeta = {
   title: 'SBMKKP',
   siteName: 'SBMKKP',
-  description: 'Seleksi Bersama masuk Kementrian Kelautan dan Perikanan',
-  url: 'https://sbmkkp.vercel.app',
-  image: 'https://sbmkkp.vercel.app/favicon/large-og.png',
+  description: 'Seleksi Bersama masuk Kementerian Kelautan dan Perikanan',
+  url: 'https://www.sbmkkp.online',
+  image: 'https://www.sbmkkp.online/images/large-og.jpg',
   type: 'website',
   robots: 'follow, index',
 };
@@ -27,14 +25,6 @@ export default function Seo(props: SeoProps) {
   meta['title'] = props.templateTitle
     ? `${props.templateTitle} | ${meta.siteName}`
     : meta.title;
-
-  // Use siteName if there is templateTitle
-  // but show full title if there is none
-  meta.image = openGraph({
-    description: meta.description,
-    siteName: props.templateTitle ? meta.siteName : meta.title,
-    templateTitle: props.templateTitle,
-  });
 
   return (
     <Head>

@@ -1,5 +1,5 @@
 module.exports = {
-  siteUrl: 'https://atlet-unesa.vercel.app/',
+  siteUrl: 'https://www.sbmkkp.online/',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [{ userAgent: '*', allow: '/' }],
