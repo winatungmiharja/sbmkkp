@@ -1,3 +1,5 @@
+import { FileWithPreview } from './dropzone';
+
 export enum Role {
   'pendaftar',
   'panitia',
@@ -43,4 +45,28 @@ export interface Pendaftar {
   tanggal_lahir: string;
   edukasi: string;
   nomor_telepon: string;
+}
+
+export enum StatusBerkas {
+  'pending',
+  'verified',
+  'cancelled',
+}
+
+export interface Berkas {
+  id: number;
+  foto_ktp: FileWithPreview[];
+  foto_formal: FileWithPreview[];
+  idPendaftar: number;
+  idJadwal: number;
+  status: keyof typeof StatusBerkas;
+}
+
+export interface BerkasData {
+  id: number;
+  foto_ktp: File;
+  foto_formal: File;
+  idPendaftar: number;
+  idJadwal: number;
+  status: keyof typeof StatusBerkas;
 }

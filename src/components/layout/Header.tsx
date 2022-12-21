@@ -2,7 +2,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import * as React from 'react';
-import { HiOutlineBell, HiOutlineMenuAlt2 } from 'react-icons/hi';
+import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 
 import UnstyledLink from '@/components/links/UnstyledLink';
 
@@ -40,14 +40,6 @@ export default function Header({ setSidebarOpen }: HeaderProps) {
           <h4 className='capitalize'>Akun {user?.role && user.role}</h4>
         </div>
         <div className='flex items-center ml-4 md:ml-6'>
-          <button
-            type='button'
-            className='p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:outline-none'
-          >
-            <span className='sr-only'>View notifications</span>
-            <HiOutlineBell className='w-6 h-6' aria-hidden='true' />
-          </button>
-
           {/* Profile dropdown */}
           <Menu as='div' className='relative ml-3'>
             <div>

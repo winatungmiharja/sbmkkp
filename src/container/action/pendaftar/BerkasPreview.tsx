@@ -1,40 +1,61 @@
 import { Dialog, Transition } from '@headlessui/react';
-import clsx from 'clsx';
+import { lookup } from 'mime-types';
 import React from 'react';
-import { HiOutlinePencil, HiOutlineX, HiX } from 'react-icons/hi';
+import { FormProvider, useForm } from 'react-hook-form';
+import {
+  HiOutlineDocumentText,
+  HiOutlinePencil,
+  HiOutlineX,
+} from 'react-icons/hi';
 
 import clsxm from '@/lib/clsxm';
 
 import Button from '@/components/buttons/Button';
+import DropzoneInput from '@/components/forms/DropzoneInput';
 
-export default function EditModalWrapper({
-  children,
-  title,
-  setEdit,
-  isEdit,
-  onDelete,
-  onCloseModal,
-}: {
-  children: React.ReactNode;
-  title: string;
-  setEdit: (value: React.SetStateAction<boolean>) => void;
-  isEdit: boolean;
-  onDelete: () => void;
-  onCloseModal: () => void;
-}) {
+import { Berkas } from '@/types/api';
+
+export default function BerkasPreview({ data }: { data: Berkas }) {
+  // edit modal state
+  const [isEdit, setIsEdit] = React.useState(false);
+
+  const berkasDefaultValues = {
+    foto_formal: [
+      {
+        preview: data.foto_formal,
+        name: 'Foto Formal',
+        type: lookup(data.foto_formal + ''),
+      },
+    ],
+    foto_ktp: [
+      {
+        preview: data.foto_ktp,
+        name: 'Foto KTP',
+        type: lookup(data.foto_ktp + ''),
+      },
+    ],
+  };
+
+  const methods = useForm({
+    mode: 'onTouched',
+    defaultValues: berkasDefaultValues,
+  });
+
+  const { reset } = methods;
+
+  //#region  //*=========== Modal ===========
+  const closeModal = () => {
+    setIsEdit(false);
+    reset();
+  };
+  //#endregion  //*======== Modal ===========
   return (
     <>
       <div className='flex gap-2 justify-end'>
         {/* Edit Button */}
-        <Button variant='ghost' onClick={() => setEdit(true)}>
+        <Button variant='ghost' onClick={() => setIsEdit(true)}>
           <span className='inline-flex gap-2'>
-            <HiOutlinePencil size={16} /> <p>Ubah</p>
-          </span>
-        </Button>
-        {/* Close Button */}
-        <Button variant='ghost' className={clsx()} onClick={() => onDelete()}>
-          <span className='inline-flex gap-2'>
-            <HiX size={16} /> <p>Hapus</p>
+            <HiOutlineDocumentText size={16} /> <p>Detail Berkas</p>
           </span>
         </Button>
       </div>
@@ -44,7 +65,7 @@ export default function EditModalWrapper({
           as='div'
           static
           className='overflow-y-auto fixed inset-0 z-40'
-          onClose={setEdit}
+          onClose={setIsEdit}
         >
           <div className='flex justify-center items-end px-4 pt-4 pb-20 min-h-screen text-center sm:block sm:p-0'>
             <Transition.Child
@@ -84,7 +105,7 @@ export default function EditModalWrapper({
                       'focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:outline-none',
                       'disabled:filter disabled:brightness-90 disabled:cursor-wait'
                     )}
-                    onClick={onCloseModal}
+                    onClick={closeModal}
                   >
                     <span className='sr-only'>Close</span>
                     <HiOutlineX className='w-6 h-6' aria-hidden='true' />
@@ -108,11 +129,34 @@ export default function EditModalWrapper({
                       as='h3'
                       className='text-lg font-medium leading-6 text-gray-900'
                     >
-                      {title}
+                      Detail Berkas
                     </Dialog.Title>
                   </div>
                 </div>
-                {children}
+                <FormProvider {...methods}>
+                  <form className='mt-8 space-y-4'>
+                    <DropzoneInput
+                      label='Foto Formal'
+                      id='foto_formal'
+                      accept='image/png, image/jpg, image/jpeg, application/pdf'
+                      helperText='File yang dapat diupload berupa .png, .jpg, .jpeg, atau .pdf'
+                      validation={{
+                        required: 'Foto Rapor Semester 1 harus diupload',
+                      }}
+                      readOnly
+                    />
+                    <DropzoneInput
+                      label='Foto KTP'
+                      id='foto_ktp'
+                      accept='image/png, image/jpg, image/jpeg, application/pdf'
+                      helperText='File yang dapat diupload berupa .png, .jpg, .jpeg, atau .pdf'
+                      validation={{
+                        required: 'Foto Rapor Semester 1 harus diupload',
+                      }}
+                      readOnly
+                    />
+                  </form>
+                </FormProvider>
               </div>
             </Transition.Child>
           </div>

@@ -31,12 +31,12 @@ const panitiaNav = [
 const pendaftarNav = [
   {
     name: 'Ajukan Pendaftaran',
-    href: '/pendaftar/',
+    href: '/pendaftar/berkas',
     icon: HiOutlineDocumentAdd,
   },
   {
     name: 'Riwayat Pendaftaran',
-    href: '/pendaftar/',
+    href: '/pendaftar/riwayat',
     icon: HiOutlineDocumentText,
   },
 ];

@@ -40,15 +40,18 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
       const loadUser = async () => {
         try {
           const token = localStorage.getItem('token');
+
           if (!token) {
             return;
           }
+
           const res = await axiosClient.post<ApiReturn<User>>(
             '/auth/check-account',
             {
               token: token,
             }
           );
+
           login({
             ...res.data.data,
             token: token + '',
@@ -71,10 +74,10 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
           if (routeRole === 'auth' || routeRole !== user?.role) {
             if (query?.redirect) {
               router.push(query.redirect as string);
-            } else if (user?.role === 'panitia') {
-              router.replace('/panitia');
             } else if (user?.role === 'pendaftar') {
-              router.replace('/pendaftar');
+              router.replace('/pendaftar/');
+            } else if (user?.role === 'panitia') {
+              router.replace('/panitia/');
             }
           }
           // Prevent unauthenticated user from accessing protected pages
