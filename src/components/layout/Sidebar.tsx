@@ -18,7 +18,7 @@ import useAuthStore from '@/store/useAuthStore';
 const panitiaNav = [
   {
     name: 'Data Pendaftaran',
-    href: '/panitia/',
+    href: '/panitia/berkas',
     icon: HiOutlineDocumentText,
   },
   {

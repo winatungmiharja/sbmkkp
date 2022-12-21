@@ -75,9 +75,9 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
             if (query?.redirect) {
               router.push(query.redirect as string);
             } else if (user?.role === 'pendaftar') {
-              router.replace('/pendaftar/');
+              router.replace('/pendaftar/berkas');
             } else if (user?.role === 'panitia') {
-              router.replace('/panitia/');
+              router.replace('/panitia/berkas');
             }
           }
           // Prevent unauthenticated user from accessing protected pages

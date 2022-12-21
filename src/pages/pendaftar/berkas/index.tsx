@@ -119,6 +119,7 @@ function IndexPage() {
   const { data: apiJadwal } = useSWR<ApiReturn<Jadwal[]>>('/jadwal/view');
   const jadwal: Jadwal[] = apiJadwal?.data ?? [];
   //#endregion  //*======== Get Jadwal Data ===========
+
   return (
     <Layout>
       <Seo templateTitle='Buat Pendaftaran' />
@@ -171,7 +172,7 @@ function IndexPage() {
                   </SectionHeader.Subheading>
                 </SectionHeader>
                 <hr />
-                <div className='grid grid-cols-2 gap-4'>
+                <div className='grid gap-4 sm:grid-cols-2'>
                   <DropzoneInput
                     label='Foto kartu tanda penduduk'
                     id='foto_ktp'
