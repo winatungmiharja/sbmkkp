@@ -10,6 +10,8 @@ export const DATE_FORMAT = {
   SHORTER_MONTH: 'dd MMM yyyy',
   /** Senin, 15 Agustus 2021 */
   FULL_DAY: 'EEEE, dd MMMM yyyy',
+  FULL_TIME: 'HH:mm a',
+  TIME: 'HH:mm',
 };
 //#endregion  //*======== Constants ===========
 
@@ -25,6 +27,13 @@ export function formatDateForAPI(date: Date): string {
  */
 export function parseDateFromAPI(date: string): Date {
   return parse(date, 'yyyy-MM-dd', new Date());
+}
+
+/**
+ * Convert yyyy-MM-dd from API to Date object
+ */
+export function parseTimeFromAPI(time: string): Date {
+  return parse(time, 'HH:mm:ss', new Date());
 }
 
 /**

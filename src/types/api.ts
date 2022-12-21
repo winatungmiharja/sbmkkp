@@ -19,3 +19,11 @@ export interface ApiUserDataReturn<D> {
   role: keyof typeof Role;
   token: string;
 }
+
+export interface Jadwal {
+  id: number;
+  tanggal_ujian: string;
+  waktu_mulai: string;
+  waktu_selesai: string;
+  lokasi_ujian: string;
+}

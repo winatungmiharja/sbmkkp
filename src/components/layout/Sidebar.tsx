@@ -22,8 +22,8 @@ const panitiaNav = [
     icon: HiOutlineDocumentText,
   },
   {
-    name: 'Data Lokasi',
-    href: '/panitia/',
+    name: 'Data Jadwal',
+    href: '/panitia/jadwal',
     icon: HiOutlineDocumentSearch,
   },
 ];

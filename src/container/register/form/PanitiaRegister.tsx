@@ -7,7 +7,7 @@ export default function PanitiaRegister() {
   return (
     <React.Fragment>
       <Input
-        id='name'
+        id='nama'
         label='Nama'
         validation={{ required: 'Nama harus diisi' }}
       />
@@ -20,6 +20,12 @@ export default function PanitiaRegister() {
         id='password'
         label='Password'
         validation={{ required: 'Password harus diisi' }}
+      />
+      <Input
+        id='nomor_telepon'
+        label='Nomor Telepon'
+        helperText='contoh : 081234567890'
+        validation={{ required: 'Nomor Telepon harus diisi' }}
       />
     </React.Fragment>
   );
