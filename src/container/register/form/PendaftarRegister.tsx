@@ -9,24 +9,35 @@ import SelectInput from '@/components/forms/SelectInput';
 
 import { educationOption, genderOption } from '@/constant/form';
 
-export default function PendaftarRegister() {
+export default function PendaftarRegister({
+  includePassword = true,
+  readOnly = false,
+}: {
+  includePassword?: boolean;
+  readOnly?: boolean;
+}) {
   return (
     <React.Fragment>
       <Input
         id='nama'
         label='Nama'
         validation={{ required: 'Nama harus diisi' }}
+        readOnly={readOnly}
       />
       <Input
         id='email'
         label='Email'
         validation={{ required: 'Email harus diisi' }}
+        readOnly={readOnly}
       />
-      <PasswordInput
-        id='password'
-        label='Password'
-        validation={{ required: 'Password harus diisi' }}
-      />
+      {includePassword && (
+        <PasswordInput
+          id='password'
+          label='Password'
+          validation={{ required: 'Password harus diisi' }}
+          readOnly={readOnly}
+        />
+      )}
       <Input
         id='nik'
         label='NIK'
@@ -39,12 +50,14 @@ export default function PendaftarRegister() {
           },
           ...exactLength(16, 'Panjang NIK harus 16 digit'),
         }}
+        readOnly={readOnly}
       />
       <Input
         id='nomor_telepon'
         label='Nomor Telepon'
         helperText='contoh : 081234567890'
         validation={{ required: 'Nomor Telepon harus diisi' }}
+        readOnly={readOnly}
       />
 
       <SelectInput
@@ -53,6 +66,7 @@ export default function PendaftarRegister() {
         validation={{
           required: 'Jenis Kelamin harus diisi',
         }}
+        readOnly={readOnly}
       >
         {genderOption.map((item) => (
           <option key={item.value} value={item.value}>
@@ -67,6 +81,7 @@ export default function PendaftarRegister() {
         validation={{
           required: 'Edukasi terakhir harus diisi',
         }}
+        readOnly={readOnly}
       >
         {educationOption.map((item) => (
           <option key={item} value={item}>
@@ -80,6 +95,7 @@ export default function PendaftarRegister() {
           id='tempat_lahir'
           label='Tempat Lahir'
           validation={{ required: 'Tempat lahir harus diisi' }}
+          readOnly={readOnly}
         />
         <DatePicker
           id='tanggal_lahir'
@@ -87,6 +103,7 @@ export default function PendaftarRegister() {
           placeholder='dd/mm/yyyy'
           maxDate={new Date()}
           validation={{ required: 'Tanggal lahir harus diisi' }}
+          readOnly={readOnly}
         />
       </div>
     </React.Fragment>

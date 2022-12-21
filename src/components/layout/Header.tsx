@@ -8,8 +8,6 @@ import UnstyledLink from '@/components/links/UnstyledLink';
 
 import useAuthStore from '@/store/useAuthStore';
 
-const userNavigation = [{ name: 'Profil', href: '#' }];
-
 type HeaderProps = {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -19,6 +17,8 @@ export default function Header({ setSidebarOpen }: HeaderProps) {
   const user = useAuthStore.useUser();
   const logout = useAuthStore.useLogout();
   //#endregion  //*======== Store ===========
+
+  const userNavigation = [{ name: 'Profil', href: `/${user?.role}/profil` }];
 
   /** No need to redirect, because it is handled in PrivateRoute */
   const handleLogout = () => {
@@ -74,7 +74,7 @@ export default function Header({ setSidebarOpen }: HeaderProps) {
                   <Menu.Item key={item.name}>
                     {({ active }) => (
                       <UnstyledLink
-                        href={item.href}
+                        href={`${item.href}`}
                         className={clsx(
                           active ? 'bg-gray-100' : '',
                           'block px-4 py-2 text-sm text-gray-700'

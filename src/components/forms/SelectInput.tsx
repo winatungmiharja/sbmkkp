@@ -4,16 +4,23 @@ import { RegisterOptions, useFormContext } from 'react-hook-form';
 import { HiExclamationCircle } from 'react-icons/hi';
 
 export type SelectInputProps = {
+  /** Input label */
   label: string;
+  /**
+   * id to be initialized with React Hook Form,
+   * must be the same with the pre-defined types.
+   */
   id: string;
+  /** Input placeholder */
   placeholder?: string;
+  /** Small text below input, useful for additional information */
   helperText?: string;
-  type?: string;
+  /** Disables the input and shows defaultValue (can be set from React Hook Form) */
   readOnly?: boolean;
+  /** Manual validation using RHF */
   validation?: RegisterOptions;
+  /** Contain all option for the input */
   children: React.ReactNode;
-  /** className for div container */
-  containerClassName?: string;
 } & React.ComponentPropsWithoutRef<'select'>;
 
 export default function SelectInput({
@@ -24,7 +31,6 @@ export default function SelectInput({
   readOnly = false,
   children,
   validation,
-  containerClassName,
   ...rest
 }: SelectInputProps) {
   const {
@@ -41,15 +47,15 @@ export default function SelectInput({
     (child) => {
       if (React.isValidElement(child)) {
         return React.cloneElement(child, {
-          disabled: child.props.value !== rest?.defaultValue,
           // selected: child.props.value === rest?.defaultValue,
+          disabled: child.props.value !== rest?.defaultValue,
         });
       }
     }
   );
 
   return (
-    <div className={containerClassName}>
+    <div>
       <label htmlFor={id} className='block text-sm font-normal text-gray-700'>
         {label}
       </label>
@@ -61,19 +67,20 @@ export default function SelectInput({
           {...rest}
           name={id}
           id={id}
+          disabled={readOnly}
           className={clsx(
             readOnly
-              ? 'bg-gray-100 focus:ring-0 cursor-not-allowed border-gray-300 focus:border-gray-300'
+              ? 'cursor-not-allowed border-gray-300 bg-gray-100 focus:border-gray-300 focus:ring-0'
               : errors[id]
-              ? 'focus:ring-red-500 border-red-500 focus:border-red-500'
-              : 'focus:ring-primary-500 border-gray-300 focus:border-primary-500',
+              ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+              : 'border-gray-300 focus:border-primary-500 focus:ring-primary-500',
             'block w-full rounded-md shadow-sm',
             { 'text-gray-500': value === '' }
           )}
           aria-describedby={id}
         >
           {placeholder && (
-            <option value='' disabled hidden>
+            <option value='' hidden>
               {placeholder}
             </option>
           )}

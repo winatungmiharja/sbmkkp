@@ -27,3 +27,20 @@ export interface Jadwal {
   waktu_selesai: string;
   lokasi_ujian: string;
 }
+
+export interface Panitia {
+  nama: string;
+  email: string;
+  nomor_telepon: string;
+}
+
+export interface Pendaftar {
+  nama: string;
+  email: string;
+  nik: string;
+  jenis_kelamin: string;
+  tempat_lahir: string;
+  tanggal_lahir: string;
+  edukasi: string;
+  nomor_telepon: string;
+}
