@@ -1,87 +1,25 @@
 import React from 'react';
-import { Cell, Column } from 'react-table';
 import useSWR from 'swr';
 
-import clsxm from '@/lib/clsxm';
 import useSWRWithToast from '@/hooks/toast/useSWRWithToast';
 
 import withAuth from '@/components/hoc/withAuth';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
-import Table from '@/components/table/Table';
 
-import BerkasAction from '@/container/action/pendaftar/BerkasAction';
-import BerkasPreview from '@/container/action/pendaftar/BerkasPreview';
+import BerkasCard from '@/container/card/BerkasCard';
 import MenuHeader from '@/container/text/MenuHeader';
-import useAuthStore from '@/store/useAuthStore';
 
-import { ApiReturn, Berkas, StatusBerkas } from '@/types/api';
+import { ApiReturn, Berkas } from '@/types/api';
 
 function IndexPage() {
-  const user = useAuthStore.useUser();
-  const {
-    data: apiBerkas,
-    isLoading,
-    mutate,
-  } = useSWRWithToast(useSWR<ApiReturn<Berkas[]>>(`/berkas/view/${user?.id}`));
-
-  const berkas: Berkas[] = apiBerkas?.data ?? [];
-  const columns = React.useMemo<Column<Berkas>[]>(
-    () => [
-      {
-        Header: 'id Berkas',
-        accessor: (row) => [row.id],
-        className: 'capitalize',
-        Cell: ({ value: [name] }: Cell<Berkas, [string]>) => (
-          <span className='font-semibold text-primary-500'>{name}</span>
-        ),
-      },
-      {
-        Header: 'id Jadwal',
-        accessor: (row) => [row.idJadwal],
-        className: 'capitalize',
-        Cell: ({ value: [name] }: Cell<Berkas, [string]>) => (
-          <span className='font-semibold text-primary-500'>{name}</span>
-        ),
-      },
-      {
-        Header: 'Status',
-        accessor: (row) => [row.status],
-        className: 'capitalize w-full',
-        Cell: ({
-          value: [status],
-        }: Cell<Berkas, [keyof typeof StatusBerkas]>) => (
-          <span
-            className={clsxm(
-              'px-4 py-1 rounded-full text-xs font-semibold tracking-wide',
-              [
-                status === 'pending' && 'bg-yellow-100 ',
-                status === 'cancelled' && 'bg-red-100 ',
-                status === 'verified' && 'bg-green-100 ',
-              ]
-            )}
-          >
-            {status}
-          </span>
-        ),
-      },
-
-      {
-        Header: 'Aksi',
-        accessor: (row) => [row],
-        Cell: ({ value: [berkas] }: Cell<Berkas, [Berkas]>) => (
-          <div className='flex gap-4'>
-            <BerkasPreview data={berkas} />
-            <BerkasAction data={berkas} mutate={mutate} />
-          </div>
-        ),
-        disableSortBy: true,
-        className: 'capitalize',
-      },
-    ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+  //#region  //*=========== Get Berkas Data ===========
+  const { data: apiBerkas, isLoading } = useSWRWithToast(
+    useSWR<ApiReturn<Berkas>>('/berkas/view')
   );
+  const dataBerkas = apiBerkas?.data;
+  //#endregion  //*======== Get Berkas Data ===========
+
   return (
     <Layout>
       <Seo templateTitle='Riwayat Pendaftaran' />
@@ -91,12 +29,13 @@ function IndexPage() {
           berikut ini riwayat pendaftaran yang sudah pernah anda ajukan
         </MenuHeader.Subheading>
       </MenuHeader>
-      <Table
-        className='mt-12'
-        data={berkas}
-        columns={columns}
-        isLoading={isLoading}
-      />
+      <div className='mt-12'>
+        {!isLoading ? (
+          <BerkasCard data={dataBerkas as Berkas} />
+        ) : (
+          <div className='min-h-[8rem] w-full bg-gray-100 rounded-md animate-pulse'></div>
+        )}
+      </div>
     </Layout>
   );
 }

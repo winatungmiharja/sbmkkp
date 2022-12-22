@@ -7,6 +7,8 @@ import clsxm from '@/lib/clsxm';
 
 import Button from '@/components/buttons/Button';
 
+import { StatusBerkas } from '@/types/api';
+
 export default function UpdateModalWrapper({
   children,
   title,
@@ -15,6 +17,7 @@ export default function UpdateModalWrapper({
   onDelete,
   onConfirmed,
   onCloseModal,
+  status,
 }: {
   children: React.ReactNode;
   title: string;
@@ -23,32 +26,33 @@ export default function UpdateModalWrapper({
   onDelete: () => void;
   onConfirmed: () => void;
   onCloseModal: () => void;
+  status: keyof typeof StatusBerkas;
 }) {
   return (
     <>
-      <div className='flex gap-2 justify-end'>
+      <div className='flex gap-2 justify-end w-full'>
+        {/* Confrim Button */}
+        {status === 'pending' && (
+          <Button
+            variant='ghost'
+            className={clsx()}
+            onClick={() => onConfirmed()}
+          >
+            <span className='inline-flex gap-2'>
+              <HiCheck size={16} /> <p>Konfirmasi</p>
+            </span>
+          </Button>
+        )}
         {/* Edit Button */}
         <Button variant='ghost' onClick={() => setEdit(true)}>
-          <span className='inline-flex gap-2'>
-            <HiOutlinePencil size={16} /> <p>Ubah</p>
-          </span>
-        </Button>
-        {/* Confrim Button */}
-        <Button
-          variant='ghost'
-          className={clsx()}
-          onClick={() => onConfirmed()}
-        >
-          <span className='inline-flex gap-2'>
-            <HiCheck size={16} /> <p>Konfirmasi</p>
-          </span>
+          <HiOutlinePencil size={16} />
         </Button>
         {/* Close Button */}
-        <Button variant='ghost' className={clsx()} onClick={() => onDelete()}>
-          <span className='inline-flex gap-2'>
-            <HiX size={16} /> <p>Hapus</p>
-          </span>
-        </Button>
+        {status !== 'verified' && (
+          <Button variant='ghost' className={clsx()} onClick={() => onDelete()}>
+            <HiX size={16} />
+          </Button>
+        )}
       </div>
       {/* Edit Modal */}
       <Transition.Root show={isEdit} as={React.Fragment}>

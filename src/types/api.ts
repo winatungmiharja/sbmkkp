@@ -59,6 +59,7 @@ export interface Berkas {
   foto_formal: FileWithPreview[];
   idPendaftar: number;
   idJadwal: number;
+  idUjian: number;
   status: keyof typeof StatusBerkas;
 }
 

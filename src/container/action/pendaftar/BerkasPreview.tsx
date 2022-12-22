@@ -54,8 +54,8 @@ export default function BerkasPreview({ data }: { data: Berkas }) {
       <div className='flex gap-2 justify-end'>
         {/* Edit Button */}
         <Button variant='ghost' onClick={() => setIsEdit(true)}>
-          <span className='inline-flex gap-2'>
-            <HiOutlineDocumentText size={16} /> <p>Detail Berkas</p>
+          <span className='inline-flex gap-2 items-center'>
+            <HiOutlineDocumentText size={16} /> <p>Detail</p>
           </span>
         </Button>
       </div>

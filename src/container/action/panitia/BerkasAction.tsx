@@ -138,6 +138,7 @@ export default function BerkasAction({ data, mutate }: BerkasActionProps) {
       onDelete={onDelete}
       onConfirmed={onConfirmed}
       onCloseModal={closeModal}
+      status={data.status}
     >
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onUpdate)} className='mt-8'>

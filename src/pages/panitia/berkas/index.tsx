@@ -68,10 +68,16 @@ function IndexPage() {
         Header: 'Aksi',
         accessor: (row) => [row],
         Cell: ({ value: [berkas] }: Cell<Berkas, [Berkas]>) => (
-          <div className='flex gap-4'>
-            <BerkasPreview data={berkas} />
-            <BerkasAction data={berkas} mutate={mutate} />
-          </div>
+          <BerkasAction data={berkas} mutate={mutate} />
+        ),
+        disableSortBy: true,
+        className: 'capitalize',
+      },
+      {
+        Header: 'Detail',
+        accessor: (row) => [row],
+        Cell: ({ value: [berkas] }: Cell<Berkas, [Berkas]>) => (
+          <BerkasPreview data={berkas} />
         ),
         disableSortBy: true,
         className: 'capitalize',
